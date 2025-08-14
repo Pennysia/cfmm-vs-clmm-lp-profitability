@@ -8,6 +8,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - run: mkdir -p data/processed figures
       - run: pip install -r requirements.txt
       - run: python src/figure01_woelders.py
       - run: python src/figure02_falkenstein.py

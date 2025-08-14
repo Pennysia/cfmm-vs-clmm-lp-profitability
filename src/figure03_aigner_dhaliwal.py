@@ -1,16 +1,13 @@
-import matplotlib.pyplot as plt
-
-scenarios = ['Down 20%', 'Up 20%']
-v2   = [-0.56, -0.46]
-v3_a = [-2.34, -1.91]  # [50%,150%]
-v3_b = [-4.75, -3.80]  # [75%,125%]
-
-x = range(len(scenarios)); w = 0.22
+import pandas as pd, matplotlib.pyplot as plt
+df = pd.read_csv('data/processed/fig03_aigner_dhaliwal_20pct.csv')
+scenarios = ['down_20','up_20']; w = 0.22
+x = range(len(scenarios))
+def val(s, series): return df[(df.scenario==s) & (df.series==series)]['value_pct'].values[0]
 plt.figure(figsize=(8,5))
-plt.bar([i-w for i in x], v2,   w, label='v2 (full range)')
-plt.bar(list(x),            v3_a, w, label='v3 [50%,150%]')
-plt.bar([i+w for i in x],  v3_b, w, label='v3 [75%,125%]')
-plt.xticks(list(x), scenarios)
+plt.bar([i-w for i in x], [val(s,'v2') for s in scenarios], w, label='v2 (full range)')
+plt.bar([i for i in x],    [val(s,'v3_50_150') for s in scenarios], w, label='v3 [50%,150%]')
+plt.bar([i+w for i in x],  [val(s,'v3_75_125') for s in scenarios], w, label='v3 [75%,125%]')
+plt.xticks(list(x), ['Down 20%','Up 20%'])
 plt.ylabel('Impermanent Loss (%)')
 plt.title('Aigner–Dhaliwal (2021): IL under ±20% Price Move')
 plt.legend(); plt.tight_layout()

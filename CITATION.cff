@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+title: "cfmm-vs-clmm-lp-profitability"
+message: "If you use this repository, please cite it."
+authors:
+  - family-names: Pennysia
+    given-names: Pennysia
+date-released: 2025-08-14
+repository-code: "https://github.com/Pennysia/cfmm-vs-clmm-lp-profitability"

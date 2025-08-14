@@ -1,6 +1,7 @@
-import numpy as np, matplotlib.pyplot as plt
-sigmas = np.linspace(0.1, 1.5, 200)  # 10% to 150% annualized
+import numpy as np, pandas as pd, matplotlib.pyplot as plt
+sigmas = np.linspace(0.1, 1.5, 200)  # 10%..150% annual vol
 apy = np.exp((sigmas**2)/8.0) - 1.0
+pd.DataFrame({'sigma_annual':sigmas,'apy_min':apy}).to_csv('data/processed/fig04_break_even_stable_risky.csv', index=False)
 plt.figure(figsize=(8,5))
 plt.plot(sigmas, apy)
 plt.xlabel('Annualized Volatility σ (risky asset)')

@@ -1,0 +1,20 @@
+paper_id: '10'
+filename: Optimal_Portfolios_Of_Liquidity_Positions.pdf
+title: Optimal Portfolios Of Liquidity Positions
+year: ''
+citation: ''
+result_type: v2_vs_hodl
+supports_claim: true
+claims:
+- text: 'Closed-form CPMM break-even fee threshold: APY_min = exp(((σ̂_i − σ̂_j)^2
+    + 2 σ̂_i σ̂_j (1 − ρ_ij))/8) − 1.'
+  location: Main text — profitability threshold derivation
+- text: 'Backtest (Uniswap v2, 2021-01-13→2024-01-01, weekly rebal., with gas): 2022
+    Sharpe 6.01 / APY 19.09% / MaxDD 1.67%; 2023 Sharpe 6.75 / APY 19.24% / MaxDD
+    1.00%; full 2021–2023 Sharpe 3.82 / APY 16.46% / MaxDD 3.67%.'
+  location: Empirical section — backtest results tables/figures
+- text: 'Robustness: profitable under ~$20/tx gas; positive Sharpe up to ~$10M AUM.'
+  location: Empirical section — gas & scalability
+caveats:
+- v2-only; no direct v2–v3 comparison. Strengthens v2 vs HODL leg of thesis.
+authors: D. Kroo; V. Gorgadze; G. Ovchinnikov; A. Barger

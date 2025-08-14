@@ -1,6 +1,6 @@
 # Do Uniswap v2 Pools Outperform v3 for LPs (Ex‑Stablecoin Pairs)?
 
-*A comprehensive synthesis of 17 sources with numbers, mechanisms, and reviewer‑ready citations.*
+*A comprehensive synthesis of 18 sources with numbers, mechanisms, and reviewer‑ready citations.*
 
 ---
 
@@ -16,25 +16,48 @@ Across the evidence base, **Uniswap v2 generally delivers higher net LP returns 
 **Scope.** Focus on **non‑stablecoin pairs**. Stable‑stable pools are out of scope; stable‑risky appear only as context.
 
 ```mermaid
-flowchart LR
-P[(Pool price moves)] --> G{Gap vs external price?}
-G -- no --> S0[No trade]
-G -- yes --> A[Arbitrage trade]
-A -->|Pays swap fee| F[Fees to LP]
-A -->|Captures price gap| L[LP loss (LVR)]
-R{v3 in range?} -->|no| Z[Zero fees while OOR]
-R -->|yes| F
-P --> R
+graph LR
+    P[(Pool price moves)] --> G{Gap vs external price?}
+    G -- no --> S0[No trade]
+    G -- yes --> A[Arbitrage trade]
+
+    %% Define nodes separately to avoid parser ambiguity
+    F[Fees to LP]
+    L[LP loss/LVR]
+    R{v3 in range?}
+    Z[Zero fees while OOR]
+
+    A -->|Pays swap fee| F
+    A -->|Captures price gap| L
+    P --> R
+    R -->|yes| F
+    R -->|no| Z
 ```
 
 **Implication:** v2 (full‑range) collects **fees continuously**; v3 collects **only while in‑range** and faces **higher per‑dollar LVR** when concentrated.
 
-> **Break‑Even Fee Threshold (CPMM / v2)**
-> For a CPMM (v2) LP on tokens *i* and *j*, a closed‑form **minimum fee APY** to offset divergence loss is:
-> **APY ≥ exp( ((σ̂\_i − σ̂\_j)^2 + 2 σ̂\_i σ̂\_j (1 − ρ\_{ij})) / 8 ) − 1**.
-> • **Stable–Risky** (σ̂\_j≈0): **APY ≥ exp(σ̂\_i²/8) − 1**.
-> • **Risky–Risky** (σ̂\_i=σ̂\_j=σ): **APY ≥ exp(σ²(1−ρ)/4) − 1**.
-> Use this as a quick plausibility check: higher **volatility** or lower **correlation** ⇒ higher break‑even fees.
+> **Break-Even Fee Threshold (CPMM / v2)**
+> For a CPMM (v2) LP on tokens \(i\) and \(j\), the **minimum fee APY** to offset divergence loss is:
+>
+> ```math
+> \mathrm{APY}_{\min} = \exp\!\left(\frac{(\hat{\sigma}_i - \hat{\sigma}_j)^2 + 2\,\hat{\sigma}_i \hat{\sigma}_j\,(1 - \rho_{ij})}{8}\right) - 1
+> ```
+>
+> **Special cases**
+> • **Stable–Risky** (\(\hat{\sigma}_j \approx 0\)):
+>
+> ```math
+> \mathrm{APY}_{\min} = \exp\!\left(\frac{\hat{\sigma}_i^2}{8}\right) - 1
+> ```
+>
+> • **Risky–Risky** (\(\hat{\sigma}_i=\hat{\sigma}_j=\sigma\)):
+>
+> ```math
+> \mathrm{APY}_{\min} = \exp\!\left(\frac{\sigma^2(1-\rho)}{4}\right) - 1
+> ```
+>
+> Higher **volatility** (\(\hat{\sigma}\)) or lower **correlation** (\(\rho\)) ⇒ higher break-even fees.
+fees.
 
 ---
 
@@ -102,7 +125,9 @@ Predictable Loss (PL) in CL **increases as the range narrows** and with $\sigma$
 * **What it adds:** a multi-pool, **hedged** CPMM LP portfolio with **weekly rebalancing** and explicit **gas modeling**, back-tested on **Uniswap v2** (Ethereum) **2021-01-13 to 2024-01-01**. Stablecoins excluded; pools filtered by activity.
 * **CPMM profitability threshold (closed-form):** for a v2 LP on tokens i and j, fees must satisfy:
 
-  APY ≥ exp( ((σ̂\_i − σ̂\_j)^2 + 2 σ̂\_i σ̂\_j (1 − ρ\_ij)) / 8 ) − 1
+  ```math
+  \mathrm{APY}_{\min} = \exp\!\left(\frac{(\hat{\sigma}_i - \hat{\sigma}_j)^2 + 2\,\hat{\sigma}_i \hat{\sigma}_j\,(1 - \rho_{ij})}{8}\right) - 1
+  ```
 
   This is the **minimum fee APY** needed to offset divergence loss in v2; higher **volatility** or lower **correlation** raises the bar (consistent with LVR-based results in our main text).
 * **Backtest highlights (risk-adjusted outperformance vs HODL index):**
@@ -148,7 +173,7 @@ Predictable Loss (PL) in CL **increases as the range narrows** and with $\sigma$
 
 ---
 
-## Limitations & Future Work
+## Limitations & Potential Future Work
 
 * **Pair breadth:** Direct v2–v3 matchups beyond ETH–USD are still sparse; extend to more volatile pairs.
 * **Accounting:** Harmonize fee compounding and **gas** across studies; v3 gas/re‑ranges likely reduce net outcomes further.

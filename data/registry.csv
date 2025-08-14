@@ -1,0 +1,6 @@
+figure_id,script,inputs,outputs,sources
+fig01,src/figure01_woelders.py,data/processed/fig01_woelders_eth_usdc.csv,figures/fig01_woelders_eth_usdc.png,"Woelders 2022 §5.2 Table 3; §5.2.1 Table 4"
+fig02,src/figure02_falkenstein.py,data/processed/fig02_falkenstein_ilfees.csv,figures/fig02_falkenstein_ilfees.png,"Falkenstein 2025 §2.6; Table 2.5"
+fig03,src/figure03_aigner_dhaliwal.py,data/processed/fig03_aigner_dhaliwal_20pct.csv,figures/fig03_aigner_dhaliwal_20pct.png,"Aigner–Dhaliwal 2021 §III Table 1"
+fig04,src/figure04_break_even_stable_risky.py,(generated),figures/fig04_break_even_stable_risky.png,"Kroo et al. 2024 CPMM threshold"
+fig05,src/figure05_break_even_vs_rho.py,(generated),figures/fig05_break_even_vs_rho.png,"Kroo et al. 2024 CPMM threshold"

@@ -7,3 +7,6 @@ data/raw/*
 !data/raw/.keep
 data/processed/*
 !data/processed/.keep
+
+# ignore normalized/deprecated evidence dumps
+evidence/_trash/

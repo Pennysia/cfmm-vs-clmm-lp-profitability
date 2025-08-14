@@ -1,10 +1,9 @@
-import matplotlib.pyplot as plt
-
-pairs = ['ETH–USDC (CEX)', 'ETH–USDC (TWAP)', 'ETH–USDT (CEX)', 'ETH–USDT (TWAP)', 'PEPE–ETH']
-v2 =  [0.55, 0.51, 0.51, 0.47, 0.74]
-v3 =  [1.16, 1.11, 1.16, 1.11, 0.85]
-
+import pandas as pd, matplotlib.pyplot as plt
+df = pd.read_csv('data/processed/fig02_falkenstein_ilfees.csv')
+pairs = df['pair'].unique().tolist()
 x = range(len(pairs)); w = 0.35
+v2 = [df[(df.pair==p) & (df.variant=='v2')]['il_over_fees'].values[0] for p in pairs]
+v3 = [df[(df.pair==p) & (df.variant=='v3')]['il_over_fees'].values[0] for p in pairs]
 plt.figure(figsize=(9,5))
 plt.bar([i-w/2 for i in x], v2, w, label='v2 (IL/Fees)')
 plt.bar([i+w/2 for i in x], v3, w, label='v3 (IL/Fees)')

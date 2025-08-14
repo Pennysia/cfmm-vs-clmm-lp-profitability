@@ -1,0 +1,36 @@
+## References (APA style)
+
+* Aigner, A. A., & Dhaliwal, G. (2021). *Uniswap: Impermanent loss and risk profile of a liquidity provider* (white paper).&#x20;
+
+* Alexander, C., Chen, X., Deng, J., & Fu, Q. (2025). Price discovery and efficiency in Uniswap liquidity pools. *Journal of Futures Markets* (forthcoming).&#x20;
+
+* Cartea, Á., Drissi, D., & Monga, M. (2023). Predictable losses of liquidity provision in constant function markets and concentrated liquidity markets. *Applied Mathematical Finance*.&#x20;
+
+* Condurachi, A., & Tudborg, N. M. (2022). *Analysis of liquidity provision within Uniswap v2* (Master’s thesis, University of Copenhagen).&#x20;
+
+* Drossos, T., Kirste, D., Kannengießer, N., & Sunyaev, A. (2025). Automated market makers: Toward more profitable liquidity provisioning strategies. In *Proceedings of the 40th ACM/SIGAPP Symposium on Applied Computing*.&#x20;
+
+* Fan, Z., Marmolejo-Cossio, F., Moroz, D., Neuder, M., Rao, R., & Parkes, D. C. (2024). *Strategic liquidity provision in Uniswap v3* (arXiv preprint).&#x20;
+
+* Falkenstein, E. (2025, August 5; v4). *Measuring and mending LP net profitability*. Working paper.&#x20;
+
+* Fritsch, R., & Canidio, A. (n.d.). *Measuring arbitrage losses and profitability of AMM liquidity*. Working paper.&#x20;
+
+* Heimbach, L., Schertenleib, E., & Wattenhofer, R. (2022). *Risks and returns of Uniswap v3 liquidity providers* (arXiv preprint).&#x20;
+
+* Loesch, S., Hindman, N., Welch, N., & Richardson, M. B. (2021, November 17). *Impermanent loss in Uniswap v3*. Report.&#x20;
+
+* Maire, B., & Wunsch, M. (2024). Market neutral liquidity provision. *Ledger, 9*, 73–88.&#x20;
+
+* Milionis, J., Moallemi, C. C., & Roughgarden, T. (2025, July 23). *Automated market making and arbitrage profits in the presence of fees* (arXiv preprint).&#x20;
+
+* Milionis, J., Moallemi, C. C., Roughgarden, T., & Zhang, A. L. (2024, May 27). *Automated market making and loss-versus-rebalancing* (arXiv preprint).&#x20;
+
+* Monga, F. (2024). *Automated market making and decentralized finance* (DPhil thesis, University of Oxford).&#x20;
+
+* Woelders, M. M. F. (2022). *Market depth and liquidity provision profitability: Uniswap v3/v2* (Master’s thesis, Warwick Business School).&#x20;
+
+* Zhu, B., Liu, D., Wan, X., Liao, G., Moallemi, C., & Bachu, B. (2025). *What drives liquidity on decentralized exchanges? Evidence from the Uniswap protocol* (arXiv preprint).&#x20;
+
+* Adams, A., & Liao, J. (2022, May). *When Uniswap v3 returns more fees for passive LPs* (SSRN working paper).&#x20;
+

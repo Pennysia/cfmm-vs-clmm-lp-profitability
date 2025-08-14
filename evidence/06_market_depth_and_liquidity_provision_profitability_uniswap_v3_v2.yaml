@@ -1,0 +1,19 @@
+paper_id: '06'
+filename: Market Depth and Liquidity Provision Profitability Uniswap V3:V2.pdf
+title: Market Depth and Liquidity Provision Profitability Uniswap V3:V2
+year: ''
+citation: ''
+result_type: v2_vs_v3
+supports_claim: true
+claims:
+- text: 'Mean total return (ETH–USDC, 2021-05-06→2022-06-01): v2 0.01150 vs v3 0.00087;
+    v2 higher (statistically significant).'
+  location: §5.2, Table 3; §5.2 text
+- text: Fee yield higher on v3 (0.02325 vs 0.01745) but adverse selection/IL much
+    worse on v3 (−0.04131 vs −0.00719).
+  location: §5.2, Table 3
+- text: 'Active strategies: v2 0.00061 vs v3 −0.01156; Passive: v2 0.03566 vs v3 0.02067.'
+  location: §5.2.1, Table 4
+caveats:
+- ETH–USDC only; gas not included in those tabulations.
+authors: M. M. F. Woelders

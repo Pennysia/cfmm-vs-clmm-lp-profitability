@@ -1,0 +1,16 @@
+name: build
+on: [push]
+jobs:
+  build-figures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: python src/figure01_woelders.py
+      - run: python src/figure02_falkenstein.py
+      - run: python src/figure03_aigner_dhaliwal.py
+      - run: python src/figure04_break_even_stable_risky.py
+      - run: python src/figure05_break_even_vs_rho.py

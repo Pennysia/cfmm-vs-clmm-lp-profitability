@@ -1,52 +1,53 @@
-Here’s a clean, ready-to-paste **README.md** for your repo.
-
----
-
 # cfmm-vs-clmm-lp-profitability
 
 > **Evidence-based analysis of Uniswap LP profitability on non-stablecoin pairs: methods, figures, and citations comparing v2 (CFMM) and v3 (CLMM).**
 
-[![License: MIT](https://img.shields.io/badge/Code%20License-MIT-informational.svg)](#license) [![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](#license)
+[![Code: MIT](https://img.shields.io/badge/Code-MIT-informational)](#license) [![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey)](#license)
 
 ## TL;DR
 
-Across the sources we analyze, **Uniswap v2 (CFMM) generally delivers higher *net* LP returns than Uniswap v3 (CLMM) for volatile (non-stablecoin) pairs**, despite v3’s higher fee intensity. The difference is driven by adverse selection / LVR** and time spent out-of-range on v3; stable-stable pools are out of scope.
+Across **18 sources**, **Uniswap v2 (CFMM) generally delivers higher net LP returns than Uniswap v3 (CLMM)** on **volatile (non-stablecoin)** pairs—despite v3’s higher fee intensity. Drivers: **adverse selection / LVR** and **time out-of-range** on v3. Stable-stable pools are **out of scope** for the main claim.
 
 ---
 
 ## Contents
 
-* **Report.md** – full write-up with figures and citations
-* **Method.md** – data sources, assumptions, and how each figure/table was built
-* **References.md** – bibliography (mirrors the in-report references)
+* **Report.md** – full write-up with figures and section/paragraph pointers
+* **Method.md** – data sources, assumptions, metrics, and how figures are built
+* **References.md** – auto-generated bibliography (from `papers/manifest.csv` + `evidence/*.yaml`)
 * **Disclaimer.md** – research & limitations notice
-* **papers/** – source PDFs (+ `manifest.csv`)
-* **evidence/** – per-paper distilled notes with paragraph/section pinpoints
-* **data/** – `raw/` inputs (if any) and `processed/` tidy CSVs used for figures
-* **figures/** – generated PNGs
-* **src/** – scripts to build tables/figures (reproducible)
-* **.github/workflows/** – CI: build figures on push
+* **papers/** – source PDFs + `manifest.csv` (IDs, titles, checksums)
+* **evidence/** – one YAML per paper with the exact lines/sections we used
+* **data/** – `raw/` verbatim extractions (optional) and `processed/` tidy CSVs for plots
+* **figures/** – generated PNGs used by the report
+* **src/** – reproducible scripts to build figures and validate links
+* **.github/workflows/** – CI to rebuild figures on push
 * **LICENSE** (code) & **LICENSE-DOCS** (text/figures)
-
-A more detailed tree is in the repo’s root **README** comments or can be regenerated with `tree -a -L 2`.
 
 ---
 
 ## Quickstart
 
 ```bash
-# Create and enter a virtual environment (Python 3.10+)
+# Create and activate a virtual environment (Python 3.10+)
 python -m venv .venv
-source .venv/bin/activate    # Windows: .venv\Scripts\activate
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
 
-# Install dependencies
+# Install deps
 pip install -r requirements.txt
+pip install pyyaml              # used by reference/evidence generators
 
-# Build figures (outputs to ./figures)
+# Build figures → ./figures
 make figures
+
+# Normalize/verify figure links inside Report.md
+python src/build_report.py
+
+# Auto-generate References.md from manifest + evidence
+make refs
 ```
 
-**Figures produced** (filenames may vary slightly depending on your `src/` scripts):
+**Figures produced:**
 
 * `figures/fig01_woelders_eth_usdc.png`
 * `figures/fig02_falkenstein_ilfees.png`
@@ -54,87 +55,147 @@ make figures
 * `figures/fig04_break_even_stable_risky.png`
 * `figures/fig05_break_even_vs_rho.png`
 
-Then open **Report.md** (links point to these images).
+Open **Report.md** and verify images render.
 
 ---
 
 ## Reproducibility & Data Provenance
 
-* **Papers** live in `papers/` with a **`manifest.csv`** capturing: `paper_id,title,authors,year,venue,doi/url,checksum`.
-* **Evidence notes**: each paper has a YAML in `evidence/` with only the facts used in the report and **section/paragraph/figure** pointers.
-* **Processed CSVs** used for figures (if any) live in `data/processed/` and are referenced by the scripts in `src/`.
-* **Figure registry**: `data/registry.csv` maps `figure_id → sources + method + script`.
+* **papers/manifest.csv** records `paper_id,title,filename,year,authors,venue,doi,url,sha256,bytes`.
+  Generate/update via: `python scripts/make_manifest.py`.
+* **evidence/** has one **YAML per paper** with:
 
-> **Important:** Large PDFs/PNGs should use **Git LFS**. This repo includes a `.gitattributes` that tracks `papers/*.pdf` and `figures/*.png`.
+  * `result_type` (`v2_vs_v3`, `v2_vs_hodl`, `v3_context`, `counter`)
+  * `supports_claim` (`yes`, `no`, `mixed`)
+  * `claims` with **precise section/paragraph/figure** pointers (what we actually used).
+* **data/processed/** contains tidy CSVs used by the plotting scripts in **src/**.
+
+  * `data/registry.csv` maps `figure_id → script, inputs, outputs, sources`.
+* **data/raw/** (optional) stores **verbatim** numeric tables extracted from PDFs.
+
+> Large binaries (PDFs/PNGs): use **Git LFS**. `.gitattributes` tracks `papers/*.pdf` and `figures/*.png`.
 
 ---
 
 ## Method (short version)
 
-* **Profit definition:** `Profit = Fees − LVR − Gas`.
-* **Scope:** volatile (non-stablecoin) pairs; stable-stable pools are excluded from the claim.
-* **Comparisons:** direct v2 vs v3 head-to-head where available (e.g., ETH–USD), plus structural/empirical studies for mechanism evidence.
-* **Figures:** built from tables/values reported in the sources or from closed-form thresholds (for CPMM break-even).
+* **Profit** = `Fees − LVR − Gas`.
+* **Scope**: volatile (non-stablecoin) pairs; stable-stable is out of scope for the main claim.
+* **Comparisons**: prioritize direct v2 vs v3 ETH–USD matchups; complement with mechanism papers and cross-sectional v3 studies.
+* **Figures**: built from reported tables or from closed-form CPMM thresholds (for v2 break-even).
 
-Full details live in **Method.md**.
+See **Method.md** for details and caveats.
 
 ---
 
-## How to Cite
+## Auto-generated References
 
-Please cite the repository (and any release/DOI you mint) as:
+**References.md** is built from `papers/manifest.csv` and enriched by metadata in `evidence/*.yaml`.
 
-> *cfmm-vs-clmm-lp-profitability: Evidence-based analysis of Uniswap LP profitability on non-stablecoin pairs* (year of latest update).
-> Available at: [https://github.com/your-org/cfmm-vs-clmm-lp-profitability](https://github.com/your-org/cfmm-vs-clmm-lp-profitability)
+* Generate/update:
 
-There’s also a **CITATION.cff** so GitHub can generate a citation snippet automatically.
+  ```bash
+  python scripts/generate_references.py
+  # or
+  make refs
+  ```
+* Classification:
+
+  * **Core**: `result_type ∈ {v2_vs_v3, v2_vs_hodl}` or `supports_claim ∈ {yes, mixed}` (and not `counter`).
+  * **Additional**: everything else present in `/papers`.
+
+---
+
+## Health Checks
+
+* **Normalize image paths & validate report links**
+
+  ```bash
+  python src/build_report.py
+  ```
+
+  Ensures `Report.md` uses `figures/*.png` and that each referenced figure exists.
+
+* **Verify manifest ↔ evidence ↔ figures**
+
+  ```bash
+  python scripts/verify_repo.py
+  ```
+
+  Fails if: missing/duplicate evidence IDs, missing figures, or registry mismatch.
+
+* **CI on push**
+  `.github/workflows/build.yml` installs deps and runs the five `src/figure*.py` scripts to rebuild images.
+
+---
+
+## Repository Tree (key parts)
+
+```
+cfmm-vs-clmm-lp-profitability/
+├─ Report.md
+├─ Method.md
+├─ References.md
+├─ Disclaimer.md
+├─ README.md
+├─ LICENSE
+├─ LICENSE-DOCS
+├─ CITATION.cff
+├─ CHANGELOG.md
+├─ requirements.txt
+├─ Makefile
+├─ .github/workflows/build.yml
+├─ papers/
+│  ├─ manifest.csv
+│  └─ *.pdf
+├─ evidence/
+│  └─ NN_<slug>.yaml
+├─ data/
+│  ├─ registry.csv
+│  ├─ raw/        # optional: verbatim tables (keep .keep if empty)
+│  └─ processed/  # tidy CSVs used in plots
+├─ figures/
+│  └─ fig01..05_*.png
+└─ src/
+   ├─ figure01_woelders.py
+   ├─ figure02_falkenstein.py
+   ├─ figure03_aigner_dhaliwal.py
+   ├─ figure04_break_even_stable_risky.py
+   ├─ figure05_break_even_vs_rho.py
+   ├─ utils.py
+   └─ build_report.py
+```
 
 ---
 
 ## Contributing
 
-Issues and PRs that:
+PRs that:
 
-* correct citations/paragraph pointers,
-* improve figure reproducibility,
-* or add vetted, **non-duplicative** sources
+* correct citations/paragraph pins,
+* improve reproducibility (data → figure), or
+* add **non-duplicative** sources with clear scope/metrics
 
-are welcome. Please keep tone neutral and avoid investment advice. For larger additions, open an issue first to align on scope.
+are welcome. Keep tone neutral; avoid investment advice. For major additions, open an issue first.
+
+---
+
+## How to Cite
+
+> **cfmm-vs-clmm-lp-profitability** (year of latest update). Evidence-based analysis of Uniswap LP profitability on non-stablecoin pairs: methods, figures, and citations comparing v2 (CFMM) and v3 (CLMM). GitHub repository.
+
+There’s a **CITATION.cff** so GitHub can render a citation snippet automatically.
 
 ---
 
 ## License
 
-* **Code** (in `src/`, build scripts): **MIT** – see `LICENSE`
-* **Text, figures, and other content** (e.g., `Report.md`, `Method.md`, `References.md`, `figures/`): **CC BY 4.0** – see `LICENSE-DOCS`
-* **Third-party papers** remain under their original copyrights (see `papers/manifest.csv`).
+* **Code** (`src/`, scripts): **MIT** – see `LICENSE`.
+* **Text/figures** (`Report.md`, `Method.md`, `References.md`, `figures/`): **CC BY 4.0** – see `LICENSE-DOCS`.
+* **Third-party papers** in `papers/` remain under their original copyrights.
 
 ---
 
 ## Disclaimer
 
-This is **research content**. It is **not** investment advice. Results depend on assumptions (e.g., fee tiers, markouts, gas/re-range policies). See **Disclaimer.md** and **Method.md** for details and limitations.
-
-
-
-## Maintainers / Contact
-
-* Name – email or handle
-* Organization (optional)
-
----
-
-### Handy commands
-
-```bash
-# Build all figures
-make figures
-
-# Clean generated outputs
-make clean
-
-# (Optional) Check your Python env
-python -V && pip -V
-```
-
-If you want, I can also generate stub files for `papers/manifest.csv`, `data/registry.csv`, and `evidence/*.yaml` with your current 17 sources so the repo is runnable end-to-end on first clone.
+This is **research content**, not investment advice. Results depend on assumptions (fee tiers, markouts, gas/re-range policy). See **Disclaimer.md** and **Method.md** for limitations.
